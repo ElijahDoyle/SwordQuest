@@ -16,6 +16,7 @@ class Enemy:
 
     # the attack method does a random amount of damgage based upon attack, and subracts that damage from the enemy(the player's) Health
     def attack(self, PLAYER, window):
+        initialHealth = PLAYER.health
         damage = random.randint(self.attackValue - 5, self.attackValue + 5)
         damage = damage - (PLAYER.defenseValue + PLAYER.addedDefense)
         print("")
@@ -26,6 +27,7 @@ class Enemy:
         PLAYER.health = PLAYER.health - damage
         if PLAYER.health < 0:
             PLAYER.health = 0
+        damage = initialHealth - PLAYER.health
         window.updateHealthBar(PLAYER)
         window.displayText("The %s attacks and does %s damage!" % (self.name, damage))
 
