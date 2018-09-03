@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Progressbar
 from character import *
+import pickle
 from enemy import *
 from UpdatedBattleFunctions import *
 
@@ -67,6 +68,33 @@ class GameWindow:
         self.testHealthButton = Button(self.playerHealthArea, text="test", command=lambda: self.decreaseHealth(char))
         self.testHealthButton.pack()
 
+        self.mainMenu = Menu()
+        master.config(menu=self.mainMenu)
+        self.fileMenu = Menu()
+        self.mainMenu.add_cascade(label="File", menu=self.fileMenu)
+        self.fileMenu.add_command(label="Save...", command=lambda: self.saveCharacter(char))
+        self.fileMenu.add_command(label="Open...", command=lambda: self.openCharacter(char))
+        self.fileMenu.add_separator()
+        self.fileMenu.add_command(label="Exit", command=master.quit)
+
+    def saveCharacter(self, CHARACTER):
+        characterFile = open("character.pickle", "wb")
+        pickle.dump(CHARACTER, characterFile)
+    def openCharacter(self, CHARACTER):
+        characterFile = open("character.pickle", "rb")
+        savedCharacter = pickle.load(characterFile)
+        CHARACTER.XP = savedCharacter.XP
+        CHARACTER.level = savedCharacter.level
+        CHARACTER.health = savedCharacter.health
+        CHARACTER.maxHealth = savedCharacter.maxHealth
+        CHARACTER.inventory = savedCharacter.inventory
+        CHARACTER.weapon = savedCharacter.weapon
+        CHARACTER.armor = savedCharacter.health
+        CHARACTER.attackValue= savedCharacter.attackValue
+        CHARACTER.defenseValue = savedCharacter.defenseValue
+        self.updateHealthBar(CHARACTER)
+
+
     def displayEnemyHealth(self, ENEMY, charact):
         self.enemyHealthTitle = Label(self.enemyHealthArea, text=ENEMY.name + " Health", font=("Helvetica", 20), bg="grey")
         self.enemyHealthTitle.pack(side=TOP)
@@ -84,7 +112,6 @@ class GameWindow:
 
         self.testEnemyHealthButton = Button(self.enemyHealthArea, text="test", command=lambda: ENEMY.attack(charact, self))
         self.testEnemyHealthButton.pack()
-
     def hideEnemyHealth(self):
         self.enemyHealthText.pack_forget()
         self.enemyHealthTitle.pack_forget()
@@ -172,7 +199,6 @@ class GameWindow:
                                  command=lambda: char.flee(ENEMY, self, master))
         self.fleeButton.pack()
         self.fleeButton.bind("<Enter>", self.fleeDescription)
-
     def hideBattleMenu(self):
         self.useItemButton.pack_forget()
         self.attackButton.pack_forget()
@@ -182,6 +208,7 @@ class GameWindow:
         self.battleMenuTitle.pack_forget()
 
     def displayCharacterInventory(self, CHARACTER, ENEMY, master):
+        print(CHARACTER.inventory)
 
         self.hideBattleMenu()
         self.inventoryTitle = Label(self.battleOptionsBox, text="Inventory", font=("helvetica", 28), bg="grey")
