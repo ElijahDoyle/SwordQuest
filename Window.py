@@ -85,8 +85,6 @@ class GameWindow:
         self.testEnemyHealthButton = Button(self.enemyHealthArea, text="test", command=lambda: ENEMY.attack(charact, self))
         self.testEnemyHealthButton.pack()
 
-
-
     def hideEnemyHealth(self):
         self.enemyHealthText.pack_forget()
         self.enemyHealthTitle.pack_forget()
@@ -214,6 +212,20 @@ class GameWindow:
         self.backToBattleMenuButton = Button(self.battleOptionsBox, text="Back",  font=("helvetica", 20), pady=2,
                                              command=lambda: self.backToBattleMenu(CHARACTER, ENEMY, master))
         self.backToBattleMenuButton.pack(side=BOTTOM)
+        
+    def displayCharacterXPBar(self, CHARACTER):
+        self.XPBarVar = IntVar()
+        self.XPBarVar.set(CHARACTER.XP)
+        self.CharacterXPBar = Progressbar(self.textArea, orient=HORIZONTAL, length=500, variable=self.XPBarVar,
+                                           maximum=(CHARACTER.level * 10))
+        self.xpTitle = Label(self.textArea, text="%s/%s XP" % (str(CHARACTER.XP), str(CHARACTER.level * 10)),
+                             font=('Helvetica', 20), bg="Black", fg="White")
+        self.xpTitle.pack(side=LEFT, padx=10)
+        self.CharacterXPBar.pack(side=RIGHT, padx=10)
+    def hideCharacterXPBar(self):
+        self.CharacterXPBar.pack_forget()
+        self.xpTitle.pack_forget()
+        
 
     def hideCharacterInventory(self):
         self.goldButton.pack_forget()

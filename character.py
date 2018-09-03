@@ -4,7 +4,8 @@ from UpdatedBattleFunctions import *
 # the Character class acts as the base for the player, with methods like attack, displayInventory, etc.
 class Character:
     def __init__(self, name):
-        self.xp = 0
+        self.XP = 0
+        self.level = 1
         self.name = name
         self.addedDefense = 0
         self.health = 20  # current amount of health
