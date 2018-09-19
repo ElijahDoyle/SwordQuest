@@ -63,10 +63,10 @@ class Character:
         chanceOfEscape = random.randint(0, 5)
         if chanceOfEscape == 1:
             window.displayText("Got Away Safely!")
+            window.hideEnemy()
             self.isFleeing = True
             self.turn = False
             ENEMY.turn = True
-            battle(self, ENEMY, window, master)
 
         else:
             window.displayText("The %s blocked the way!" % (ENEMY.name))
