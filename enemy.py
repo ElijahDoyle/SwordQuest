@@ -4,13 +4,14 @@ from tkinter import *
 
 # This is the 'Enemy' class; it is a blueprint for any potential enemies the player may fight
 class Enemy:
-    def __init__(self, name, health, maxHealth, attackValue, defenseValue):
+    def __init__(self, name, health, maxHealth, attackValue, defenseValue, xpValue):
         self.name = name
         self.image = PhotoImage(file= (self.name).lower() +".png")
         self.health = health
         self.maxHealth = maxHealth
         self.attackValue = attackValue
         self.defenseValue = defenseValue
+        self.xpValue = xpValue
         self.turn = False
         self.healthDisplayed = False
 
