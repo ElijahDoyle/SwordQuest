@@ -77,10 +77,10 @@ class GameWindow:
         self.fileMenu.add_separator()
         self.fileMenu.add_command(label="Exit", command=master.quit)
 
-    def saveCharacter(self, CHARACTER):
+    def saveCharacter(self, CHARACTER): # saves the current character object w/ all its attributes to a pickle file
         characterFile = open("character.pickle", "wb")
         pickle.dump(CHARACTER, characterFile)
-    def openCharacter(self, CHARACTER):
+    def openCharacter(self, CHARACTER): # retrieves the pickle file and sets the current character object's attributes to that of the saved char.
         characterFile = open("character.pickle", "rb")
         savedCharacter = pickle.load(characterFile)
         CHARACTER.XP = savedCharacter.XP
@@ -94,8 +94,7 @@ class GameWindow:
         CHARACTER.defenseValue = savedCharacter.defenseValue
         self.updateHealthBar(CHARACTER)
 
-
-    def displayEnemyHealth(self, ENEMY, charact):
+    def displayEnemy(self, ENEMY, charact):
         self.enemyHealthTitle = Label(self.enemyHealthArea, text=ENEMY.name + " Health", font=("Helvetica", 20), bg="grey")
         self.enemyHealthTitle.pack(side=TOP)
 
@@ -112,7 +111,7 @@ class GameWindow:
 
         self.testEnemyHealthButton = Button(self.enemyHealthArea, text="test", command=lambda: ENEMY.attack(charact, self))
         self.testEnemyHealthButton.pack()
-    def hideEnemyHealth(self):
+    def hideEnemy(self):
         self.enemyHealthText.pack_forget()
         self.enemyHealthTitle.pack_forget()
         self.enemyHealthBar.pack_forget()
@@ -280,7 +279,7 @@ root = Tk()
 root.title("SwordQuest Test")
 root.geometry("1000x600")
 dude = Character("Test Character")
-testEnemy = Enemy("Skeleton", 20, 20, 4, 2)
+testEnemy = Enemy("Skeleton", 20, 20, 4, 2, 5)
 testGameWindow = GameWindow(root, dude)
 
 battle(dude, testEnemy, testGameWindow, root)
