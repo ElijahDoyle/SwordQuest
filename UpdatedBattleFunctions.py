@@ -9,13 +9,25 @@ def isDead(Object):
         return False
 
 def victory(player, adversary, window, master):
-    pass
+    window.hideEnemy()
+    window.displayCharacterXPBar(player)
+    window.displayText("You have defeated the %s!" % (adversary.name))
+    master.update()
+    time.sleep(2)
+    player.XP += adversary.xpValue
+    print(str(player.XP))
+    window.hideCharacterXPBar()
+    window.displayCharacterXPBar(player)
+    window.displayText("%s experience earned!" % (str(adversary.xpValue)))
+    master.update()
+
+
 
 
 
 def battle(player, adversary, window, master):
     if not adversary.healthDisplayed:
-        window.displayEnemyHealth(adversary, player)
+        window.displayEnemy(adversary, player)
         adversary.healthDisplayed = True
     if player.turn:
         if not isDead(player):
@@ -32,8 +44,7 @@ def battle(player, adversary, window, master):
         master.update()
         time.sleep(2)
         if player.isFleeing:
-            window.hideEnemyHealth()
-            victory(player, adversary, window, master)
+            print("this message should not show")
         elif not isDead(adversary):
             adversary.attack(player, window)
             player.turn = True
